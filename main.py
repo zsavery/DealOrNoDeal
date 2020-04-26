@@ -1,34 +1,35 @@
 from deal_or_no_deal import deal_or_no
-import deal_or_no_deal as DND
 
 print("I am your host Howie Mandel. Welcome to Deal or No Deal!")
 guest_name = input("Enter your name: ")
 guest_case = int(input("Enter select a case (1 - 26): "))
 
 round_flag = [1, 6, False]
-game1 = deal_or_no(guest_name, guest_name)
-
+game1 = deal_or_no(guest_case, guest_name)
+game1.select_open_case2(guest_case)
 def round(flag):
     while flag[2] == False:
-        if flag[1] != 1:
-            Next = flag[1] -1
-        else:
-            Next = flag[1]
-        while flag[1] != 1:
-            if flag[0] >= 1 and flag[0] <= 9:
+        temp = flag[1]
+        if flag[0] != 10:
+           print("Round", flag[0])
+        while temp != 0:
+            if flag[0] >= 1 and flag[0] < 10:
                 game1.print_cases()
                 game1.select_open_case()
-                flag[2] = game1.banker()
-            elif flag[0] == 10:
+                if temp == 1:
+                    flag[2] = game1.banker()
+            if flag[0] == 10:
                 game1.print_cases()
                 #offer swap
-                #if refuse open g_case, else open last case
+                #if yes swap
                 flag[2] = True
-
-
-            flag[1]-=1
+            temp -= 1
         flag[0]+=1
-        flag[1] = Next
+        if flag[1] == 1:
+            continue
+        else:
+            flag[1]= flag[1]-1
+        #if flag[2] = True open g_case 
     return
     
 round(round_flag)
